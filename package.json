@@ -24,11 +24,11 @@
   },
   "homepage": "https://github.com/gagern/nodeJavaDeserialization#readme",
   "devDependencies": {
-    "chai": "^4.1.2",
-    "mocha": "^4.1.0",
-    "nyc": "^11.4.1"
+    "chai": "^4.3.4",
+    "mocha": "^8.3.2",
+    "nyc": "^15.1.0"
   },
   "dependencies": {
-    "long": "^3.2.0"
+    "long": "^4.0.0"
   }
 }

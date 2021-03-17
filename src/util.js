@@ -36,8 +36,8 @@ function mapParser(cls, fields, data) {
     var map = new Map();
     var obj = {};
     for (var i = 0; i < size; ++i) {
-        var key = data[2*i + 1];
-        var value = data[2*i + 2];
+        var key = data[(2 * i) + 1];
+        var value = data[(2 * i) + 2];
         map.set(key, value);
         if (typeof key === "string") {
             obj[key] = value;
@@ -53,8 +53,8 @@ function enumMapParser(cls, fields, data) {
     var map = new Map();
     var obj = {};
     for (var i = 0; i < size; ++i) {
-        var key = data[2*i + 1];
-        var value = data[2*i + 2];
+        var key = data[(2 * i) + 1];
+        var value = data[(2 * i) + 2];
         map.set(key, value);
         obj[key] = value;
     }
@@ -69,14 +69,14 @@ function hashSetParser(cls, fields, data) {
     var size = data[0].readInt32BE(8);
     if (data.length !== size + 1)
         throw new Error("Expected " + size + " elements " +
-                        "but parsed " + (data.length - 1));
+            "but parsed " + (data.length - 1));
     fields.set = new Set(data.slice(1));
     return fields;
 }
 
-Parser.register("java.util.ArrayList", "7881d21d99c7619d",  listParser);
+Parser.register("java.util.ArrayList", "7881d21d99c7619d", listParser);
 Parser.register("java.util.ArrayDeque", "207cda2e240da08b", listParser);
-Parser.register("java.util.Hashtable", "13bb0f25214ae4b8",  mapParser);
+Parser.register("java.util.Hashtable", "13bb0f25214ae4b8", mapParser);
 Parser.register("java.util.HashMap", "0507dac1c31660d1", mapParser);
 Parser.register("java.util.EnumMap", "065d7df7be907ca1", enumMapParser);
 Parser.register("java.util.HashSet", "ba44859596b8b734", hashSetParser);

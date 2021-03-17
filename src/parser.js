@@ -29,7 +29,7 @@ var Long = require("long");
 
 var names = [
     "Null", "Reference", "ClassDesc", "Object", "String", "Array", "Class", "BlockData", "EndBlockData",
-    "Reset", "BlockDataLong", "Exception", "LongString", "ProxyClassDesc", "Enum"
+    "Reset", "BlockDataLong", "Exception", "LongString", "ProxyClassDesc", "Enum",
 ];
 
 var endBlock = {};
@@ -176,12 +176,12 @@ Parser.prototype.parseObject = function() {
     var res = Object.defineProperties({}, {
         "class": {
             configurable: true,
-            value: this.classDesc()
+            value: this.classDesc(),
         },
         "extends": {
             configurable: true,
-            value: {}
-        }
+            value: {},
+        },
     });
     this.newHandle(res);
     this.recursiveClassData(res.class, res);
@@ -202,20 +202,20 @@ Parser.prototype.classdata = function(cls) {
     var classdata = this[cls.name + "@" + cls.serialVersionUID + ":classdata"] || this.values;
     var postproc = this[cls.name + "@" + cls.serialVersionUID + ":postproc"];
     switch (cls.flags & 0x0f) {
-    case 0x02: // SC_SERIALIZABLE without SC_WRITE_METHOD
-        return this.values(cls);
-    case 0x03: // SC_SERIALIZABLE with SC_WRITE_METHOD
-        res = classdata.call(this, cls);
-        data = res["@"] = this.annotations();
-        if (postproc)
-            res = postproc.call(this, cls, res, data);
-        return res;
-    case 0x04: // SC_EXTERNALIZABLE without SC_BLOCKDATA
-        throw Error("Can't parse version 1 external content");
-    case 0x0c: // SC_EXTERNALIZABLE with SC_BLOCKDATA
-        return {"@": this.annotations()};
-    default:
-        throw Error("Don't know how to deserialize class with flags 0x" + cls.flags.toString(16));
+        case 0x02: // SC_SERIALIZABLE without SC_WRITE_METHOD
+            return this.values(cls);
+        case 0x03: // SC_SERIALIZABLE with SC_WRITE_METHOD
+            res = classdata.call(this, cls);
+            data = res["@"] = this.annotations();
+            if (postproc)
+                res = postproc.call(this, cls, res, data);
+            return res;
+        case 0x04: // SC_EXTERNALIZABLE without SC_BLOCKDATA
+            throw Error("Can't parse version 1 external content");
+        case 0x0c: // SC_EXTERNALIZABLE with SC_BLOCKDATA
+            return { "@": this.annotations() };
+        default:
+            throw Error("Don't know how to deserialize class with flags 0x" + cls.flags.toString(16));
     }
 }
 
@@ -224,12 +224,12 @@ Parser.prototype.parseArray = function() {
     var res = Object.defineProperties([], {
         "class": {
             configurable: true,
-            value: classDesc
+            value: classDesc,
         },
         "extends": {
             configurable: true,
-            value: {}
-        }
+            value: {},
+        },
     });
     this.newHandle(res);
     var len = this.readInt32();
@@ -244,15 +244,17 @@ Parser.prototype.parseEnum = function() {
     var clazz = this.classDesc();
     var deferredHandle = this.newDeferredHandle();
     var constant = this.content();
+    // We need to use the object wrapper here to define the additional properties.
+    // noinspection JSPrimitiveTypeWrapperUsage
     var res = Object.defineProperties(new String(constant), {
         "class": {
             configurable: true,
-            value: clazz
+            value: clazz,
         },
         "extends": {
             configurable: true,
-            value: {}
-        }
+            value: {},
+        },
     });
     deferredHandle(res);
     return res;
@@ -368,13 +370,13 @@ Parser.prototype["prim["] = function() {
 
 Parser.registerClassDataParser = function(className, serialVersionUID, parser) {
     assert.strictEqual(serialVersionUID.length, 16,
-      "serialVersionUID must be 16 hex digits");
+        "serialVersionUID must be 16 hex digits");
     Parser.prototype[className + "@" + serialVersionUID + ":classdata"] = parser;
 }
 
 Parser.registerPostProcessor = function(className, serialVersionUID, parser) {
     assert.strictEqual(serialVersionUID.length, 16,
-                       "serialVersionUID must be 16 hex digits");
+        "serialVersionUID must be 16 hex digits");
     Parser.prototype[className + "@" + serialVersionUID + ":postproc"] = parser;
 }
 

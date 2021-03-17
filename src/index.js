@@ -29,3 +29,6 @@ module.exports.parse = function parse(buf) {
     var parser = new Parser(buf);
     return parser.contents;
 }
+
+module.exports.registerClassDataParser = Parser.registerClassDataParser;
+module.exports.registerPostProcessor = Parser.registerPostProcessor;

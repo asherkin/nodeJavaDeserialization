@@ -5,6 +5,9 @@ const expect = chai.expect;
 const zlib = require('zlib');
 const javaDeserialization = require('../');
 
+// Register a classdata parser for the CompletelyCustomFormat test.
+javaDeserialization.registerClassDataParser('CompletelyCustomFormat', '0000000000000001', cls => ({}));
+
 function testCase(b64data, checks) {
   return function() {
     let bytes = Buffer.from(b64data, 'base64');
@@ -25,6 +28,23 @@ function testCase(b64data, checks) {
 }
 
 describe('Deserialization of', function() {
+
+  it('ArrayDeque', testCase(
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAFGphdmEudXRpbC5BcnJheURlcXVlIHzaLiQNoIsDAAB4cHcEAAAAAnQAA2Zvb3NyABFqYXZhLmxhbmcuSW50ZWdlchLioKT3gYc4AgABSQAFdmFsdWV4cgAQamF2YS5sYW5nLk51bWJlcoaslR0LlOCLAgAAeHAAAAB7eHVxAH4AAAAAAAJxAH4ACXQAA0VuZA==',
+    function(itm) {
+      expect(itm.list, "itm.list").to.be.an('Array');
+      expect(itm.list, "itm.list").to.have.lengthOf(2);
+      expect(itm.list[0], "itm.list[0]").to.equal('foo');
+      expect(itm.list[1].value, "itm.list[1].value").to.equal(123);
+    }));
+
+  it('HashSet', testCase(
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAEWphdmEudXRpbC5IYXNoU2V0ukSFlZa4tzQDAAB4cHcMAAAAED9AAAAAAAACdAADZm9vc3IAEWphdmEubGFuZy5JbnRlZ2VyEuKgpPeBhzgCAAFJAAV2YWx1ZXhyABBqYXZhLmxhbmcuTnVtYmVyhqyVHQuU4IsCAAB4cAAAAHt4dXEAfgAAAAAAAnEAfgAJdAADRW5k',
+    function(itm) {
+      expect(itm.set, "itm.set").to.be.an.instanceof(Set);
+      expect(itm.set.size, "itm.set.size").to.equal(2);
+      expect(itm.set.has('foo'), "itm.set.has('foo')").to.be.true;
+    }));
 
   it('canaries only', testCase(
     'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABdXEAfgAAAAAAAnEAfgADdAADRW5k',
@@ -182,7 +202,7 @@ describe('Deserialization of', function() {
     }));
 
   it('custom format', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IADEN1c3RvbUZvcm1hdAAAAAAAAAABAwABSQADZm9veHAAADA5dwu16y0AtestALXrLXQACGFuZCBtb3JleHVxAH4AAAAAAAJxAH4ABnQAA0VuZA==',
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IADEN1c3RvbUZvcm1hdAAAAAAAAAABAwACSQADZm9vTAADYmFydAASTGphdmEvbGFuZy9TdHJpbmc7eHAAADA5dAANSGVsbG8sIFdvcmxkIXcLtestALXrLQC16y10AAhhbmQgbW9yZXh1cQB+AAAAAAACcQB+AAh0AANFbmQ=',
     function(itm) {
       expect(itm['@'], "itm['@']").to.be.an('Array');
       expect(itm['@'], "itm['@']").to.have.lengthOf(2);
@@ -190,6 +210,17 @@ describe('Deserialization of', function() {
       expect(itm['@'][0].toString('hex'), "itm['@'][0].toString('hex')").to.equal('b5eb2d00b5eb2d00b5eb2d');
       expect(itm['@'][1], "itm['@'][1]").to.equal('and more');
       expect(itm.foo, "itm.foo").to.equal(12345);
+      expect(itm.bar, "itm.bar").to.equal('Hello, World!');
+    }));
+
+  it('completely custom format', testCase(
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAFkNvbXBsZXRlbHlDdXN0b21Gb3JtYXQAAAAAAAAAAQMAAkkAA2Zvb0wAA2JhcnQAEkxqYXZhL2xhbmcvU3RyaW5nO3hwdAANSGVsbG8sIFdvcmxkIXcPAAAwObXrLQC16y0AtesteHVxAH4AAAAAAAJxAH4AB3QAA0VuZA==',
+    function(itm) {
+      expect(itm['@'], "itm['@']").to.be.an('Array');
+      expect(itm['@'], "itm['@']").to.have.lengthOf(2);
+      expect(itm['@'][0], "itm['@'][0]").to.equal('Hello, World!');
+      expect(Buffer.isBuffer(itm['@'][1]), "Buffer.isBuffer(itm['@'][1])").to.be.true;
+      expect(itm['@'][1].toString('hex'), "itm['@'][1].toString('hex')").to.equal('00003039b5eb2d00b5eb2d00b5eb2d');
     }));
 
   it('externalizable', testCase(
@@ -290,23 +321,6 @@ describe('Deserialization of', function() {
       expect(itm.list, "itm.list").to.have.lengthOf(2);
       expect(itm.list[0], "itm.list[0]").to.equal('foo');
       expect(itm.list[1].value, "itm.list[1].value").to.equal(123);
-    }));
-
-  it('ArrayDeque', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAFGphdmEudXRpbC5BcnJheURlcXVlIHzaLiQNoIsDAAB4cHcEAAAAAnQAA2Zvb3NyABFqYXZhLmxhbmcuSW50ZWdlchLioKT3gYc4AgABSQAFdmFsdWV4cgAQamF2YS5sYW5nLk51bWJlcoaslR0LlOCLAgAAeHAAAAB7eHVxAH4AAAAAAAJxAH4ACXQAA0VuZA==',
-    function(itm) {
-      expect(itm.list, "itm.list").to.be.an('Array');
-      expect(itm.list, "itm.list").to.have.lengthOf(2);
-      expect(itm.list[0], "itm.list[0]").to.equal('foo');
-      expect(itm.list[1].value, "itm.list[1].value").to.equal(123);
-    }));
-
-  it('HashSet', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAEWphdmEudXRpbC5IYXNoU2V0ukSFlZa4tzQDAAB4cHcMAAAAED9AAAAAAAACdAADZm9vc3IAEWphdmEubGFuZy5JbnRlZ2VyEuKgpPeBhzgCAAFJAAV2YWx1ZXhyABBqYXZhLmxhbmcuTnVtYmVyhqyVHQuU4IsCAAB4cAAAAHt4dXEAfgAAAAAAAnEAfgAJdAADRW5k',
-    function(itm) {
-      expect(itm.set, "itm.set").to.be.an.instanceof(Set);
-      expect(itm.set.size, "itm.set.size").to.equal(2);
-      expect(itm.set.has('foo'), "itm.set.has('foo')").to.be.true;
     }));
 
 });

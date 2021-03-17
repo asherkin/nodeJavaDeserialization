@@ -41,6 +41,7 @@ class CustomFormat implements Serializable {
     private static final long serialVersionUID = 0x1;
 
     private int foo = 12345;
+    private String bar = "Hello, World!";
 
     private void writeObject(java.io.ObjectOutputStream out)
         throws java.io.IOException
@@ -50,6 +51,32 @@ class CustomFormat implements Serializable {
         byte[] data = { -75, -21, 45, 0, -75, -21, 45, 0, -75, -21, 45 };
         out.write(data);
         out.writeObject("and more");
+    }
+
+    private void readObject(java.io.ObjectInputStream in)
+        throws java.io.IOException, ClassNotFoundException { }
+
+    private void readObjectNoData()
+        throws java.io.ObjectStreamException { }
+}
+
+class CompletelyCustomFormat implements Serializable {
+    private static final long serialVersionUID = 0x1;
+
+    // These are here to cause an error if there is an attempt to parse
+    // the defaultWriteObject format.
+    private int foo;
+    private String bar;
+
+    private void writeObject(java.io.ObjectOutputStream out)
+        throws java.io.IOException
+    {
+        out.writeObject("Hello, World!");
+        out.writeInt(12345);
+
+        // These numbers should result in "test" visible in the base64 output ;)
+        byte[] data = { -75, -21, 45, 0, -75, -21, 45, 0, -75, -21, 45 };
+        out.write(data);
     }
 
     private void readObject(java.io.ObjectInputStream in)
@@ -264,6 +291,18 @@ class TestCases extends GenerateTestCases {
                          "'b5eb2d00b5eb2d00b5eb2d'");
         checkStrictEqual("itm['@'][1]", "'and more'");
         checkStrictEqual("itm.foo", "12345");
+        checkStrictEqual("itm.bar", "'Hello, World!'");
+    }
+
+    @SerializationTestCase public void completelyCustomFormat() throws Exception {
+        writeObject(new CompletelyCustomFormat());
+        checkArray("itm['@']");
+        checkLength("itm['@']", 2);
+        checkStrictEqual("itm['@'][0]", "'Hello, World!'");
+        // This is the primitive data lump (TC_BLOCKDATA).
+        checkThat("Buffer.isBuffer(itm['@'][1])");
+        checkStrictEqual("itm['@'][1].toString('hex')",
+                         "'00003039b5eb2d00b5eb2d00b5eb2d'");
     }
 
     @SerializationTestCase public void externalizable() throws Exception {
@@ -411,5 +450,4 @@ class TestCases extends GenerateTestCases {
         checkStrictEqual("itm.set.size", "2");
         checkThat("itm.set.has('foo')");
     }
-
 }

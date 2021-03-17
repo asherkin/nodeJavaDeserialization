@@ -198,12 +198,14 @@ Parser.prototype.recursiveClassData = function(cls, obj) {
 
 Parser.prototype.classdata = function(cls) {
     var res, data;
-    var postproc = this[cls.name + "@" + cls.serialVersionUID];
+    // For bcompat, this defaults to the values handler - same as without a write method.
+    var classdata = this[cls.name + "@" + cls.serialVersionUID + ":classdata"] || this.values;
+    var postproc = this[cls.name + "@" + cls.serialVersionUID + ":postproc"];
     switch (cls.flags & 0x0f) {
     case 0x02: // SC_SERIALIZABLE without SC_WRITE_METHOD
         return this.values(cls);
     case 0x03: // SC_SERIALIZABLE with SC_WRITE_METHOD
-        res = this.values(cls);
+        res = classdata.call(this, cls);
         data = res["@"] = this.annotations();
         if (postproc)
             res = postproc.call(this, cls, res, data);
@@ -364,10 +366,19 @@ Parser.prototype["prim["] = function() {
     return this.content();
 }
 
-Parser.register = function(className, serialVersionUID, parser) {
+Parser.registerClassDataParser = function(className, serialVersionUID, parser) {
+    assert.strictEqual(serialVersionUID.length, 16,
+      "serialVersionUID must be 16 hex digits");
+    Parser.prototype[className + "@" + serialVersionUID + ":classdata"] = parser;
+}
+
+Parser.registerPostProcessor = function(className, serialVersionUID, parser) {
     assert.strictEqual(serialVersionUID.length, 16,
                        "serialVersionUID must be 16 hex digits");
-    Parser.prototype[className + "@" + serialVersionUID] = parser;
+    Parser.prototype[className + "@" + serialVersionUID + ":postproc"] = parser;
 }
+
+// Backwards compat shim.
+Parser.register = Parser.registerPostProcessor;
 
 module.exports = Parser;

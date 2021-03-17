@@ -17,6 +17,9 @@ class GenerateTestCases {
              "const zlib = require('zlib');\n" +
              "const javaDeserialization = require('../');\n" +
              "\n" +
+             "// Register a classdata parser for the CompletelyCustomFormat test.\n" +
+             "javaDeserialization.registerClassDataParser('CompletelyCustomFormat', '0000000000000001', cls => ({}));\n" +
+             "\n" +
              "function testCase(b64data, checks) {\n" +
              "  return function() {\n" +
              "    let bytes = Buffer.from(b64data, 'base64');\n" +

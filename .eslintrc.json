@@ -1,0 +1,41 @@
+{
+  "env": {
+    "commonjs": true,
+    "es2017": true,
+    "node": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "rules": {
+    "indent": [
+      "error",
+      4,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "no-var": "error",
+    "prefer-const": "error",
+    "curly": "error",
+    "prefer-template": "error",
+    "brace-style": "error",
+    "padded-blocks": [
+      "error",
+      "never"
+    ]
+  }
+}

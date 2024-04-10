@@ -30,18 +30,18 @@ function testCase(b64data, checks) {
 
 describe('Deserialization of', function() {
 
-  it('string', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABdAAIc29tZXRleHR1cQB+AAAAAAACcQB+AAR0AANFbmQ=',
-    function(itm) {
-      expect(typeof itm, "typeof itm").to.equal('string');
-      expect(itm, "itm").to.equal('sometext');
-    }));
-
   it('Exception as regular object', testCase(
     'H4sIAAAAAAAAAIVSXWvUQBS9m83WNqAufmGrriBaUWQXQYWSIthllWKsoBWEBWU2ud1OnUzizMSNCqKIr+KrgvoHfBX8AX48FEQEH330TZ99seDc1P2Qgs7DTHJz7plzTu6rH1DJFGxvByvsFqsLJrv1i50VDI3/5OPVl1V9RDgAeQoAjoHKHHa5vAn3oKQVTA1bLmXS8BhbeYip4Yl8cX3snHfi4TfqtexD4ADxaW3/6Sl/79sNiMVllfRYR+CX9ycPz/TerJbBDaASskyjgZ2FzgYhGwOkH8DmCA3j4gJqzboWt20Ed9koLrt+GzxtWHhjUbHQImrtvyD9Dy2BMUpjKXfoLE2VJcRooFobqK63ZYaLRsC18fOUAvEMjJ1nnSSJbZy10Tg3cjtnj87Orh2Y6SdLYe75RwObePds+tTXRw648+AJLnEhizuoAtgSYSgY2WsKpjUJ2RTA+BIXuMBi/PPuxWiWk2hQKS69a6DcFNbQuN3rdLstWKDVMl1oIYf1ZiKEHQayfvCKjJOIL3GKnJz/2nro+Ovvj6sOlAJwha0Q+4T9ncf+TzCsT87B/dVrP2sFTSk0sGsk4SHM5qz7g1Iwn1GK3SYd+YPP+55+YM/LUJoHV/M7WBiEnkt7TqJ25xkdtBx6mLReWzL6DS3112r+AgAA',
     function(itm) {
       expect(itm.class.name, "itm.class.name").to.equal('java.lang.RuntimeException');
       expect(itm.detailMessage, "itm.detailMessage").to.equal('Kaboom');
+    }));
+
+  it('string', testCase(
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABdAAIc29tZXRleHR1cQB+AAAAAAACcQB+AAR0AANFbmQ=',
+    function(itm) {
+      expect(typeof itm, "typeof itm").to.equal('string');
+      expect(itm, "itm").to.equal('sometext');
     }));
 
   it('canaries only', testCase(
@@ -115,9 +115,9 @@ describe('Deserialization of', function() {
       expect(itm.class.name, "itm.class.name").to.equal('io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField');
       expect(itm.class.super.name, "itm.class.super.name").to.equal('io.github.gagern.nodeJavaDeserialization.BaseClassWithField');
       expect(itm.class.super.super, "itm.class.super.super").to.equal(null);
-      expect(itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField.bar, "itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField.bar").to.equal(234);
-      expect(itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField.foo, "itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField.foo").to.equal(undefined);
-      expect(itm.extends.io.github.gagern.nodeJavaDeserialization.BaseClassWithField.foo, "itm.extends.io.github.gagern.nodeJavaDeserialization.BaseClassWithField.foo").to.equal(123);
+      expect(itm.extends['io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField'].bar, "itm.extends['io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField'].bar").to.equal(234);
+      expect(itm.extends['io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField'].foo, "itm.extends['io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField'].foo").to.equal(undefined);
+      expect(itm.extends['io.github.gagern.nodeJavaDeserialization.BaseClassWithField'].foo, "itm.extends['io.github.gagern.nodeJavaDeserialization.BaseClassWithField'].foo").to.equal(123);
       expect(itm.bar, "itm.bar").to.equal(234);
       expect(itm.foo, "itm.foo").to.equal(123);
     }));
@@ -128,8 +128,8 @@ describe('Deserialization of', function() {
       expect(itm.class.name, "itm.class.name").to.equal('io.github.gagern.nodeJavaDeserialization.DerivedClassWithSameField');
       expect(itm.class.super.name, "itm.class.super.name").to.equal('io.github.gagern.nodeJavaDeserialization.BaseClassWithField');
       expect(itm.class.super.super, "itm.class.super.super").to.equal(null);
-      expect(itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithSameField.foo, "itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithSameField.foo").to.equal(345);
-      expect(itm.extends.io.github.gagern.nodeJavaDeserialization.BaseClassWithField.foo, "itm.extends.io.github.gagern.nodeJavaDeserialization.BaseClassWithField.foo").to.equal(123);
+      expect(itm.extends['io.github.gagern.nodeJavaDeserialization.DerivedClassWithSameField'].foo, "itm.extends['io.github.gagern.nodeJavaDeserialization.DerivedClassWithSameField'].foo").to.equal(345);
+      expect(itm.extends['io.github.gagern.nodeJavaDeserialization.BaseClassWithField'].foo, "itm.extends['io.github.gagern.nodeJavaDeserialization.BaseClassWithField'].foo").to.equal(123);
       expect(itm.foo, "itm.foo").to.equal(345);
     }));
 

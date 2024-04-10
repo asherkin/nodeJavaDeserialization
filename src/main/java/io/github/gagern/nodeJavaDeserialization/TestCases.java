@@ -201,9 +201,9 @@ class TestCases extends GenerateTestCases {
         checkStrictEqual("itm.class.name", "'io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField'");
         checkStrictEqual("itm.class.super.name", "'io.github.gagern.nodeJavaDeserialization.BaseClassWithField'");
         checkStrictEqual("itm.class.super.super", "null");
-        checkStrictEqual("itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField.bar", "234");
-        checkStrictEqual("itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField.foo", "undefined");
-        checkStrictEqual("itm.extends.io.github.gagern.nodeJavaDeserialization.BaseClassWithField.foo", "123");
+        checkStrictEqual("itm.extends['io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField'].bar", "234");
+        checkStrictEqual("itm.extends['io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField'].foo", "undefined");
+        checkStrictEqual("itm.extends['io.github.gagern.nodeJavaDeserialization.BaseClassWithField'].foo", "123");
         checkStrictEqual("itm.bar", "234");
         checkStrictEqual("itm.foo", "123");
     }
@@ -213,8 +213,8 @@ class TestCases extends GenerateTestCases {
         checkStrictEqual("itm.class.name", "'io.github.gagern.nodeJavaDeserialization.DerivedClassWithSameField'");
         checkStrictEqual("itm.class.super.name", "'io.github.gagern.nodeJavaDeserialization.BaseClassWithField'");
         checkStrictEqual("itm.class.super.super", "null");
-        checkStrictEqual("itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithSameField.foo", "345");
-        checkStrictEqual("itm.extends.io.github.gagern.nodeJavaDeserialization.BaseClassWithField.foo", "123");
+        checkStrictEqual("itm.extends['io.github.gagern.nodeJavaDeserialization.DerivedClassWithSameField'].foo", "345");
+        checkStrictEqual("itm.extends['io.github.gagern.nodeJavaDeserialization.BaseClassWithField'].foo", "123");
         checkStrictEqual("itm.foo", "345");
     }
 

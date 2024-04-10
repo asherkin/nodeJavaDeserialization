@@ -1,12 +1,13 @@
+//This is a generated file from GeneratedTestCases.java
 'use strict';
 
 const chai = require('chai');
 const expect = chai.expect;
 const zlib = require('zlib');
-const javaDeserialization = require('../');
+const javaDeserialization = require('../../main/node');
 
-// Register a classdata parser for the CompletelyCustomFormat test.
-javaDeserialization.registerClassDataParser('CompletelyCustomFormat', '0000000000000001', cls => ({}));
+// Register a classdata parser for the io.github.gagern.nodeJavaDeserialization.CompletelyCustomFormat test.
+javaDeserialization.registerClassDataParser('io.github.gagern.nodeJavaDeserialization.CompletelyCustomFormat', '0000000000000001', cls => ({}));
 
 function testCase(b64data, checks) {
   return function() {
@@ -29,33 +30,23 @@ function testCase(b64data, checks) {
 
 describe('Deserialization of', function() {
 
-  it('ArrayDeque', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAFGphdmEudXRpbC5BcnJheURlcXVlIHzaLiQNoIsDAAB4cHcEAAAAAnQAA2Zvb3NyABFqYXZhLmxhbmcuSW50ZWdlchLioKT3gYc4AgABSQAFdmFsdWV4cgAQamF2YS5sYW5nLk51bWJlcoaslR0LlOCLAgAAeHAAAAB7eHVxAH4AAAAAAAJxAH4ACXQAA0VuZA==',
-    function(itm) {
-      expect(itm.list, "itm.list").to.be.an('Array');
-      expect(itm.list, "itm.list").to.have.lengthOf(2);
-      expect(itm.list[0], "itm.list[0]").to.equal('foo');
-      expect(itm.list[1].value, "itm.list[1].value").to.equal(123);
-    }));
-
-  it('HashSet', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAEWphdmEudXRpbC5IYXNoU2V0ukSFlZa4tzQDAAB4cHcMAAAAED9AAAAAAAACdAADZm9vc3IAEWphdmEubGFuZy5JbnRlZ2VyEuKgpPeBhzgCAAFJAAV2YWx1ZXhyABBqYXZhLmxhbmcuTnVtYmVyhqyVHQuU4IsCAAB4cAAAAHt4dXEAfgAAAAAAAnEAfgAJdAADRW5k',
-    function(itm) {
-      expect(itm.set, "itm.set").to.be.an.instanceof(Set);
-      expect(itm.set.size, "itm.set.size").to.equal(2);
-      expect(itm.set.has('foo'), "itm.set.has('foo')").to.be.true;
-    }));
-
-  it('canaries only', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABdXEAfgAAAAAAAnEAfgADdAADRW5k',
-    function() {
-    }));
-
   it('string', testCase(
     'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABdAAIc29tZXRleHR1cQB+AAAAAAACcQB+AAR0AANFbmQ=',
     function(itm) {
       expect(typeof itm, "typeof itm").to.equal('string');
       expect(itm, "itm").to.equal('sometext');
+    }));
+
+  it('Exception as regular object', testCase(
+    'H4sIAAAAAAAAAIVSXWvUQBS9m83WNqAufmGrriBaUWQXQYWSIthllWKsoBWEBWU2ud1OnUzizMSNCqKIr+KrgvoHfBX8AX48FEQEH330TZ99seDc1P2Qgs7DTHJz7plzTu6rH1DJFGxvByvsFqsLJrv1i50VDI3/5OPVl1V9RDgAeQoAjoHKHHa5vAn3oKQVTA1bLmXS8BhbeYip4Yl8cX3snHfi4TfqtexD4ADxaW3/6Sl/79sNiMVllfRYR+CX9ycPz/TerJbBDaASskyjgZ2FzgYhGwOkH8DmCA3j4gJqzboWt20Ed9koLrt+GzxtWHhjUbHQImrtvyD9Dy2BMUpjKXfoLE2VJcRooFobqK63ZYaLRsC18fOUAvEMjJ1nnSSJbZy10Tg3cjtnj87Orh2Y6SdLYe75RwObePds+tTXRw648+AJLnEhizuoAtgSYSgY2WsKpjUJ2RTA+BIXuMBi/PPuxWiWk2hQKS69a6DcFNbQuN3rdLstWKDVMl1oIYf1ZiKEHQayfvCKjJOIL3GKnJz/2nro+Ovvj6sOlAJwha0Q+4T9ncf+TzCsT87B/dVrP2sFTSk0sGsk4SHM5qz7g1Iwn1GK3SYd+YPP+55+YM/LUJoHV/M7WBiEnkt7TqJ25xkdtBx6mLReWzL6DS3112r+AgAA',
+    function(itm) {
+      expect(itm.class.name, "itm.class.name").to.equal('java.lang.RuntimeException');
+      expect(itm.detailMessage, "itm.detailMessage").to.equal('Kaboom');
+    }));
+
+  it('canaries only', testCase(
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABdXEAfgAAAAAAAnEAfgADdAADRW5k',
+    function() {
     }));
 
   it('long string', testCase(
@@ -75,13 +66,13 @@ describe('Deserialization of', function() {
     }));
 
   it('duplicate object', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAEkJhc2VDbGFzc1dpdGhGaWVsZAAAAAAAABI0AgABSQADZm9veHAAAAB7dAAFZGVsaW1xAH4ABHVxAH4AAAAAAAJxAH4ABnQAA0VuZA==',
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAO2lvLmdpdGh1Yi5nYWdlcm4ubm9kZUphdmFEZXNlcmlhbGl6YXRpb24uQmFzZUNsYXNzV2l0aEZpZWxkAAAAAAAAEjQCAAFJAANmb294cAAAAHt0AAVkZWxpbXEAfgAEdXEAfgAAAAAAAnEAfgAGdAADRW5k',
     function(obj1, delim, obj2) {
       expect(obj1, "obj1").to.equal(obj2);
     }));
 
   it('primitive fields', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAD1ByaW1pdGl2ZUZpZWxkcwAAEjRWeJq8AgAIWgACYm9CAAJieUMAAWNEAAFkRgABZkkAAWlKAAFsUwABc3hwAesSNEAorhR64UeuQpkAAP///4X////////86/44dXEAfgAAAAAAAnEAfgAFdAADRW5k',
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAOGlvLmdpdGh1Yi5nYWdlcm4ubm9kZUphdmFEZXNlcmlhbGl6YXRpb24uUHJpbWl0aXZlRmllbGRzAAASNFZ4mrwCAAhaAAJib0IAAmJ5QwABY0QAAWRGAAFmSQABaUoAAWxTAAFzeHAB6xI0QCiuFHrhR65CmQAA////hf////////zr/jh1cQB+AAAAAAACcQB+AAV0AANFbmQ=',
     function(itm) {
       expect(itm.i, "itm.i").to.equal(-123);
       expect(itm.s, "itm.s").to.equal(-456);
@@ -119,26 +110,26 @@ describe('Deserialization of', function() {
     }));
 
   it('inherited field', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAHERlcml2ZWRDbGFzc1dpdGhBbm90aGVyRmllbGQAAAAAAAAjRQIAAUkAA2JhcnhyABJCYXNlQ2xhc3NXaXRoRmllbGQAAAAAAAASNAIAAUkAA2Zvb3hwAAAAewAAAOp1cQB+AAAAAAACcQB+AAZ0AANFbmQ=',
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IARWlvLmdpdGh1Yi5nYWdlcm4ubm9kZUphdmFEZXNlcmlhbGl6YXRpb24uRGVyaXZlZENsYXNzV2l0aEFub3RoZXJGaWVsZAAAAAAAACNFAgABSQADYmFyeHIAO2lvLmdpdGh1Yi5nYWdlcm4ubm9kZUphdmFEZXNlcmlhbGl6YXRpb24uQmFzZUNsYXNzV2l0aEZpZWxkAAAAAAAAEjQCAAFJAANmb294cAAAAHsAAADqdXEAfgAAAAAAAnEAfgAGdAADRW5k',
     function(itm) {
-      expect(itm.class.name, "itm.class.name").to.equal('DerivedClassWithAnotherField');
-      expect(itm.class.super.name, "itm.class.super.name").to.equal('BaseClassWithField');
+      expect(itm.class.name, "itm.class.name").to.equal('io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField');
+      expect(itm.class.super.name, "itm.class.super.name").to.equal('io.github.gagern.nodeJavaDeserialization.BaseClassWithField');
       expect(itm.class.super.super, "itm.class.super.super").to.equal(null);
-      expect(itm.extends.DerivedClassWithAnotherField.bar, "itm.extends.DerivedClassWithAnotherField.bar").to.equal(234);
-      expect(itm.extends.DerivedClassWithAnotherField.foo, "itm.extends.DerivedClassWithAnotherField.foo").to.equal(undefined);
-      expect(itm.extends.BaseClassWithField.foo, "itm.extends.BaseClassWithField.foo").to.equal(123);
+      expect(itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField.bar, "itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField.bar").to.equal(234);
+      expect(itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField.foo, "itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField.foo").to.equal(undefined);
+      expect(itm.extends.io.github.gagern.nodeJavaDeserialization.BaseClassWithField.foo, "itm.extends.io.github.gagern.nodeJavaDeserialization.BaseClassWithField.foo").to.equal(123);
       expect(itm.bar, "itm.bar").to.equal(234);
       expect(itm.foo, "itm.foo").to.equal(123);
     }));
 
   it('duplicate field', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAGURlcml2ZWRDbGFzc1dpdGhTYW1lRmllbGQAAAAAAAA0VgIAAUkAA2Zvb3hyABJCYXNlQ2xhc3NXaXRoRmllbGQAAAAAAAASNAIAAUkAA2Zvb3hwAAAAewAAAVl1cQB+AAAAAAACcQB+AAZ0AANFbmQ=',
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAQmlvLmdpdGh1Yi5nYWdlcm4ubm9kZUphdmFEZXNlcmlhbGl6YXRpb24uRGVyaXZlZENsYXNzV2l0aFNhbWVGaWVsZAAAAAAAADRWAgABSQADZm9veHIAO2lvLmdpdGh1Yi5nYWdlcm4ubm9kZUphdmFEZXNlcmlhbGl6YXRpb24uQmFzZUNsYXNzV2l0aEZpZWxkAAAAAAAAEjQCAAFJAANmb294cAAAAHsAAAFZdXEAfgAAAAAAAnEAfgAGdAADRW5k',
     function(itm) {
-      expect(itm.class.name, "itm.class.name").to.equal('DerivedClassWithSameField');
-      expect(itm.class.super.name, "itm.class.super.name").to.equal('BaseClassWithField');
+      expect(itm.class.name, "itm.class.name").to.equal('io.github.gagern.nodeJavaDeserialization.DerivedClassWithSameField');
+      expect(itm.class.super.name, "itm.class.super.name").to.equal('io.github.gagern.nodeJavaDeserialization.BaseClassWithField');
       expect(itm.class.super.super, "itm.class.super.super").to.equal(null);
-      expect(itm.extends.DerivedClassWithSameField.foo, "itm.extends.DerivedClassWithSameField.foo").to.equal(345);
-      expect(itm.extends.BaseClassWithField.foo, "itm.extends.BaseClassWithField.foo").to.equal(123);
+      expect(itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithSameField.foo, "itm.extends.io.github.gagern.nodeJavaDeserialization.DerivedClassWithSameField.foo").to.equal(345);
+      expect(itm.extends.io.github.gagern.nodeJavaDeserialization.BaseClassWithField.foo, "itm.extends.io.github.gagern.nodeJavaDeserialization.BaseClassWithField.foo").to.equal(123);
       expect(itm.foo, "itm.foo").to.equal(345);
     }));
 
@@ -167,7 +158,7 @@ describe('Deserialization of', function() {
     }));
 
   it('array fields', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAC0FycmF5RmllbGRzAAAAAAAAAAECAANbAAJpYXQAAltJWwADaWFhdAADW1tJWwACc2F0ABNbTGphdmEvbGFuZy9TdHJpbmc7eHB1cgACW0lNumAmduqypQIAAHhwAAAAAwAAAAwAAAAiAAAAOHVyAANbW0kX9+RPGY+JPAIAAHhwAAAAAnVxAH4ACAAAAAIAAAALAAAADHVxAH4ACAAAAAMAAAAVAAAAFgAAABd1cgATW0xqYXZhLmxhbmcuU3RyaW5nO63SVufpHXtHAgAAeHAAAAACdAADZm9vdAADYmFydXEAfgAAAAAAAnEAfgASdAADRW5k',
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IANGlvLmdpdGh1Yi5nYWdlcm4ubm9kZUphdmFEZXNlcmlhbGl6YXRpb24uQXJyYXlGaWVsZHMAAAAAAAAAAQIAA1sAAmlhdAACW0lbAANpYWF0AANbW0lbAAJzYXQAE1tMamF2YS9sYW5nL1N0cmluZzt4cHVyAAJbSU26YCZ26rKlAgAAeHAAAAADAAAADAAAACIAAAA4dXIAA1tbSRf35E8Zj4k8AgAAeHAAAAACdXEAfgAIAAAAAgAAAAsAAAAMdXEAfgAIAAAAAwAAABUAAAAWAAAAF3VyABNbTGphdmEubGFuZy5TdHJpbmc7rdJW5+kde0cCAAB4cAAAAAJ0AANmb290AANiYXJ1cQB+AAAAAAACcQB+ABJ0AANFbmQ=',
     function(itm) {
       expect(itm.ia, "itm.ia").to.be.an('Array');
       expect(itm.iaa, "itm.iaa").to.be.an('Array');
@@ -177,13 +168,13 @@ describe('Deserialization of', function() {
     }));
 
   it('enum', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABfnIACFNvbWVFbnVtAAAAAAAAAAASAAB4cgAOamF2YS5sYW5nLkVudW0AAAAAAAAAABIAAHhwdAADT05FfnEAfgADdAAFVEhSRUVxAH4AB3VxAH4AAAAAAAJxAH4ACXQAA0VuZA==',
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABfnIAMWlvLmdpdGh1Yi5nYWdlcm4ubm9kZUphdmFEZXNlcmlhbGl6YXRpb24uU29tZUVudW0AAAAAAAAAABIAAHhyAA5qYXZhLmxhbmcuRW51bQAAAAAAAAAAEgAAeHB0AANPTkV+cQB+AAN0AAVUSFJFRXEAfgAHdXEAfgAAAAAAAnEAfgAJdAADRW5k',
     function(one, three, three2) {
       expect(typeof one, "typeof one").to.equal('object');
       expect(one, "one").to.be.an.instanceof(String);
       expect(one == 'ONE', "one == 'ONE'").to.be.true;
       expect(one, "one").to.not.equal('ONE');
-      expect(one.class.name, "one.class.name").to.equal('SomeEnum');
+      expect(one.class.name, "one.class.name").to.equal('io.github.gagern.nodeJavaDeserialization.SomeEnum');
       expect(one.class.isEnum, "one.class.isEnum").to.be.true;
       expect(one.class.super.name, "one.class.super.name").to.equal('java.lang.Enum');
       expect(one.class.super.super, "one.class.super.super").to.equal(null);
@@ -194,15 +185,8 @@ describe('Deserialization of', function() {
       expect(three2, "three2").to.equal(three);
     }));
 
-  it('Exception as regular object', testCase(
-    'H4sIAAAAAAAAAIVSXWvUQBS9m83WNqAufmGrriBaUWQXQYWSIthllWKsoBWEBWU2ud1OnUzizMSNCqKIr+KrgvoHfBX8AX48FEQEH330TZ99seDc1P2Qgs7DTHJz7plzTu6rH1DJFGxvByvsFqsLJrv1i50VDI3/5OPVl1V9RDgAeQoAjoHKHHa5vAn3oKQVTA1bLmXS8BhbeYip4Yl8cX3snHfi4TfqtexD4ADxaW3/6Sl/79sNiMVllfRYR+CX9ycPz/TerJbBDaASskyjgZ2FzgYhGwOkH8DmCA3j4gJqzboWt20Ed9koLrt+GzxtWHhjUbHQImrtvyD9Dy2BMUpjKXfoLE2VJcRooFobqK63ZYaLRsC18fOUAvEMjJ1nnSSJbZy10Tg3cjtnj87Orh2Y6SdLYe75RwObePds+tTXRw648+AJLnEhizuoAtgSYSgY2WsKpjUJ2RTA+BIXuMBi/PPuxWiWk2hQKS69a6DcFNbQuN3rdLstWKDVMl1oIYf1ZiKEHQayfvCKjJOIL3GKnJz/2nro+Ovvj6sOlAJwha0Q+4T9ncf+TzCsT87B/dVrP2sFTSk0sGsk4SHM5qz7g1Iwn1GK3SYd+YPP+55+YM/LUJoHV/M7WBiEnkt7TqJ25xkdtBx6mLReWzL6DS3112r+AgAA',
-    function(itm) {
-      expect(itm.class.name, "itm.class.name").to.equal('java.lang.RuntimeException');
-      expect(itm.detailMessage, "itm.detailMessage").to.equal('Kaboom');
-    }));
-
   it('custom format', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IADEN1c3RvbUZvcm1hdAAAAAAAAAABAwACSQADZm9vTAADYmFydAASTGphdmEvbGFuZy9TdHJpbmc7eHAAADA5dAANSGVsbG8sIFdvcmxkIXcLtestALXrLQC16y10AAhhbmQgbW9yZXh1cQB+AAAAAAACcQB+AAh0AANFbmQ=',
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IANWlvLmdpdGh1Yi5nYWdlcm4ubm9kZUphdmFEZXNlcmlhbGl6YXRpb24uQ3VzdG9tRm9ybWF0AAAAAAAAAAEDAAJJAANmb29MAANiYXJ0ABJMamF2YS9sYW5nL1N0cmluZzt4cAAAMDl0AA1IZWxsbywgV29ybGQhdwu16y0AtestALXrLXQACGFuZCBtb3JleHVxAH4AAAAAAAJxAH4ACHQAA0VuZA==',
     function(itm) {
       expect(itm['@'], "itm['@']").to.be.an('Array');
       expect(itm['@'], "itm['@']").to.have.lengthOf(2);
@@ -214,7 +198,7 @@ describe('Deserialization of', function() {
     }));
 
   it('completely custom format', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAFkNvbXBsZXRlbHlDdXN0b21Gb3JtYXQAAAAAAAAAAQMAAkkAA2Zvb0wAA2JhcnQAEkxqYXZhL2xhbmcvU3RyaW5nO3hwdAANSGVsbG8sIFdvcmxkIXcPAAAwObXrLQC16y0AtesteHVxAH4AAAAAAAJxAH4AB3QAA0VuZA==',
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAP2lvLmdpdGh1Yi5nYWdlcm4ubm9kZUphdmFEZXNlcmlhbGl6YXRpb24uQ29tcGxldGVseUN1c3RvbUZvcm1hdAAAAAAAAAABAwACSQADZm9vTAADYmFydAASTGphdmEvbGFuZy9TdHJpbmc7eHB0AA1IZWxsbywgV29ybGQhdw8AADA5testALXrLQC16y14dXEAfgAAAAAAAnEAfgAHdAADRW5k',
     function(itm) {
       expect(itm['@'], "itm['@']").to.be.an('Array');
       expect(itm['@'], "itm['@']").to.have.lengthOf(2);
@@ -224,7 +208,7 @@ describe('Deserialization of', function() {
     }));
 
   it('externalizable', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IACEV4dGVybmFs8N9gtNEyHREMAAB4cHcPAAAAC7XrLQC16y0AtestdAAIYW5kIG1vcmV4dXEAfgAAAAAAAnEAfgAGdAADRW5k',
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAMWlvLmdpdGh1Yi5nYWdlcm4ubm9kZUphdmFEZXNlcmlhbGl6YXRpb24uRXh0ZXJuYWyNBpwj8+bz8wwAAHhwdw8AAAALtestALXrLQC16y10AAhhbmQgbW9yZXh1cQB+AAAAAAACcQB+AAZ0AANFbmQ=',
     function(itm) {
       expect(itm['@'], "itm['@']").to.be.an('Array');
       expect(itm['@'], "itm['@']").to.have.lengthOf(2);
@@ -235,7 +219,7 @@ describe('Deserialization of', function() {
     }));
 
   it('long externalizable', testCase(
-    'H4sIAAAAAAAAAFvzloG1tIhBONonK7EsUS8nMS9dzz8pKzW5xHrCuYj5AsWaOUwMDBUFDAwMTCUMrE6p6Zl5hQx1DIzFRQwcrhUlqUV5iTkf7idsuWgkK8gDUlkFVMkCxAwMjEzMLKxs7BycXNw8vHz8AoJCwiKiYuISklLSMrJy8gqKSsoqqmrqGppa2jq6evoGhkbGJqZm5haWVtY2tnb2Do5Ozi6ubu4enl7ePr5+/gGBQcEhoWHhEZFR0TGxcfEJiUnJKalp6RmZWdk5uXn5BYVFxSWlZeUVlVXVNbV19Q2NTc0trW3tHZ1d3T29ff0TJk6aPGXqtOkzZs6aPWfuvPkLFi5avGTpsuUrVq5avWbtuvUbNm7avGXrtu07du7avWfvvv0HDh46fOToseMnTp46febsufMXLl66fOXqtes3bt66fefuvfsPHj56/OTps+cvXr56/ebtu/cfPn76/OXrt+8/fv76/efvv/8j3f8lDByJeSkKuflFqRWloDQDAkwgBlsJA7NrXgoAi1fv5nwCAAA=',
+    'H4sIAAAAAAAAAFvzloG1tIhBONonK7EsUS8nMS9dzz8pKzW5xHrCuYj5AsWaOUwMDBUFDAwMTCUMrE6p6Zl5hQx1DIzFRQyGmfl66ZklGaVJeumJ6alFeXp5+SmpXkBzXFKLU4syE3MyqxJLMvPz9FwrSoDSiTm9bHOUPz/7/JkHZGQV0EgWIGZgYGRiZmFlY+fg5OLm4eXjFxAUEhYRFROXkJSSlpGVk1dQVFJWUVVT19DU0tbR1dM3MDQyNjE1M7ewtLK2sbWzd3B0cnZxdXP38PTy9vH18w8IDAoOCQ0Lj4iMio6JjYtPSExKTklNS8/IzMrOyc3LLygsKi4pLSuvqKyqrqmtq29obGpuaW1r7+js6u7p7eufMHHS5ClTp02fMXPW7Dlz581fsHDR4iVLly1fsXLV6jVr163fsHHT5i1bt23fsXPX7j179+0/cPDQ4SNHjx0/cfLU6TNnz52/cPHS5StXr12/cfPW7Tt3791/8PDR4ydPnz1/8fLV6zdv373/8PHT5y9fv33/8fPX7z9///0f6f4vYeBIzEtRyM0vSq0oBSUuEGACMdhKGJhd81IAbs5j0qUCAAA=',
     function(itm) {
       expect(itm['@'], "itm['@']").to.be.an('Array');
       expect(itm['@'], "itm['@']").to.have.lengthOf(2);
@@ -299,14 +283,14 @@ describe('Deserialization of', function() {
     }));
 
   it('EnumMap', testCase(
-    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAEWphdmEudXRpbC5FbnVtTWFwBl19976QfKEDAAFMAAdrZXlUeXBldAARTGphdmEvbGFuZy9DbGFzczt4cHZyAAhTb21lRW51bQAAAAAAAAAAEgAAeHIADmphdmEubGFuZy5FbnVtAAAAAAAAAAASAAB4cHcEAAAAAn5xAH4ABnQAA09ORXNyABFqYXZhLmxhbmcuSW50ZWdlchLioKT3gYc4AgABSQAFdmFsdWV4cgAQamF2YS5sYW5nLk51bWJlcoaslR0LlOCLAgAAeHAAAAB7fnEAfgAGdAAFVEhSRUV0AANiYXp4cQB+AAlxAH4ADnVxAH4AAAAAAAJxAH4AEXQAA0VuZA==',
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAEWphdmEudXRpbC5FbnVtTWFwBl19976QfKEDAAFMAAdrZXlUeXBldAARTGphdmEvbGFuZy9DbGFzczt4cHZyADFpby5naXRodWIuZ2FnZXJuLm5vZGVKYXZhRGVzZXJpYWxpemF0aW9uLlNvbWVFbnVtAAAAAAAAAAASAAB4cgAOamF2YS5sYW5nLkVudW0AAAAAAAAAABIAAHhwdwQAAAACfnEAfgAGdAADT05Fc3IAEWphdmEubGFuZy5JbnRlZ2VyEuKgpPeBhzgCAAFJAAV2YWx1ZXhyABBqYXZhLmxhbmcuTnVtYmVyhqyVHQuU4IsCAAB4cAAAAHt+cQB+AAZ0AAVUSFJFRXQAA2JhenhxAH4ACXEAfgAOdXEAfgAAAAAAAnEAfgARdAADRW5k',
     function(itm, one, three) {
       expect(typeof itm.obj, "typeof itm.obj").to.equal('object');
       expect(typeof itm['@'], "typeof itm['@']").to.equal('object');
       expect(itm.obj.THREE, "itm.obj.THREE").to.equal('baz');
       expect(itm.obj.ONE.value, "itm.obj.ONE.value").to.equal(123);
       expect(itm.obj, "itm.obj").to.have.all.keys(['ONE', 'THREE']);
-      expect(itm.keyType.name, "itm.keyType.name").to.equal('SomeEnum');
+      expect(itm.keyType.name, "itm.keyType.name").to.equal('io.github.gagern.nodeJavaDeserialization.SomeEnum');
       expect(itm.keyType.isEnum, "itm.keyType.isEnum").to.be.true;
       expect(itm.map, "itm.map").to.be.an.instanceof(Map);
       expect(itm.map.get(three), "itm.map.get(three)").to.equal('baz');
@@ -321,6 +305,23 @@ describe('Deserialization of', function() {
       expect(itm.list, "itm.list").to.have.lengthOf(2);
       expect(itm.list[0], "itm.list[0]").to.equal('foo');
       expect(itm.list[1].value, "itm.list[1].value").to.equal(123);
+    }));
+
+  it('ArrayDeque', testCase(
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAFGphdmEudXRpbC5BcnJheURlcXVlIHzaLiQNoIsDAAB4cHcEAAAAAnQAA2Zvb3NyABFqYXZhLmxhbmcuSW50ZWdlchLioKT3gYc4AgABSQAFdmFsdWV4cgAQamF2YS5sYW5nLk51bWJlcoaslR0LlOCLAgAAeHAAAAB7eHVxAH4AAAAAAAJxAH4ACXQAA0VuZA==',
+    function(itm) {
+      expect(itm.list, "itm.list").to.be.an('Array');
+      expect(itm.list, "itm.list").to.have.lengthOf(2);
+      expect(itm.list[0], "itm.list[0]").to.equal('foo');
+      expect(itm.list[1].value, "itm.list[1].value").to.equal(123);
+    }));
+
+  it('HashSet', testCase(
+    'rO0ABXVyABNbTGphdmEubGFuZy5PYmplY3Q7kM5YnxBzKWwCAAB4cAAAAAJ0AAVCZWdpbnEAfgABc3IAEWphdmEudXRpbC5IYXNoU2V0ukSFlZa4tzQDAAB4cHcMAAAAED9AAAAAAAACdAADZm9vc3IAEWphdmEubGFuZy5JbnRlZ2VyEuKgpPeBhzgCAAFJAAV2YWx1ZXhyABBqYXZhLmxhbmcuTnVtYmVyhqyVHQuU4IsCAAB4cAAAAHt4dXEAfgAAAAAAAnEAfgAJdAADRW5k',
+    function(itm) {
+      expect(itm.set, "itm.set").to.be.an.instanceof(Set);
+      expect(itm.set.size, "itm.set.size").to.equal(2);
+      expect(itm.set.has('foo'), "itm.set.has('foo')").to.be.true;
     }));
 
 });

@@ -4,8 +4,11 @@
   "description": "Parse Java object serialization format using pure JavaScript",
   "main": "src/index.js",
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text-summary mocha test/*.js",
-    "gentest": "cd test && javac *.java && java GenerateTestCases > generated.js && npm test"
+    "built": "echo 'build here'",
+    "lint": "echo 'no linting setup yet'",
+    "test": "nyc --reporter=html --reporter=text-summary mocha src/test/node/*.js",
+    "gentest": "java -classpath target/classes io.github.gagern.nodeJavaDeserialization.GenerateTestCases > src/test/node/generated.js && npm test",
+    "package": "echo 'make publishable artifact here'"
   },
   "repository": {
     "type": "git",

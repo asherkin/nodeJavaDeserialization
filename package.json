@@ -2,7 +2,7 @@
   "name": "java-deserialization",
   "version": "0.1.0",
   "description": "Parse Java object serialization format using pure JavaScript",
-  "main": "src/index.js",
+  "main": "src/main/node/index.js",
   "scripts": {
     "built": "echo 'build here'",
     "lint": "echo 'no linting setup yet'",
@@ -40,6 +40,6 @@
     "long": "^4.0.0"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=18.0.0"
   }
 }

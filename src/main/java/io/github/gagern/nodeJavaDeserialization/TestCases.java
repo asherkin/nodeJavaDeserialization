@@ -1,3 +1,5 @@
+package io.github.gagern.nodeJavaDeserialization;
+
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -196,23 +198,23 @@ class TestCases extends GenerateTestCases {
 
     @SerializationTestCase public void inheritedField() throws Exception {
         writeObject(new DerivedClassWithAnotherField());
-        checkStrictEqual("itm.class.name", "'DerivedClassWithAnotherField'");
-        checkStrictEqual("itm.class.super.name", "'BaseClassWithField'");
+        checkStrictEqual("itm.class.name", "'io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField'");
+        checkStrictEqual("itm.class.super.name", "'io.github.gagern.nodeJavaDeserialization.BaseClassWithField'");
         checkStrictEqual("itm.class.super.super", "null");
-        checkStrictEqual("itm.extends.DerivedClassWithAnotherField.bar", "234");
-        checkStrictEqual("itm.extends.DerivedClassWithAnotherField.foo", "undefined");
-        checkStrictEqual("itm.extends.BaseClassWithField.foo", "123");
+        checkStrictEqual("itm.extends['io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField'].bar", "234");
+        checkStrictEqual("itm.extends['io.github.gagern.nodeJavaDeserialization.DerivedClassWithAnotherField'].foo", "undefined");
+        checkStrictEqual("itm.extends['io.github.gagern.nodeJavaDeserialization.BaseClassWithField'].foo", "123");
         checkStrictEqual("itm.bar", "234");
         checkStrictEqual("itm.foo", "123");
     }
 
     @SerializationTestCase public void duplicateField() throws Exception {
         writeObject(new DerivedClassWithSameField());
-        checkStrictEqual("itm.class.name", "'DerivedClassWithSameField'");
-        checkStrictEqual("itm.class.super.name", "'BaseClassWithField'");
+        checkStrictEqual("itm.class.name", "'io.github.gagern.nodeJavaDeserialization.DerivedClassWithSameField'");
+        checkStrictEqual("itm.class.super.name", "'io.github.gagern.nodeJavaDeserialization.BaseClassWithField'");
         checkStrictEqual("itm.class.super.super", "null");
-        checkStrictEqual("itm.extends.DerivedClassWithSameField.foo", "345");
-        checkStrictEqual("itm.extends.BaseClassWithField.foo", "123");
+        checkStrictEqual("itm.extends['io.github.gagern.nodeJavaDeserialization.DerivedClassWithSameField'].foo", "345");
+        checkStrictEqual("itm.extends['io.github.gagern.nodeJavaDeserialization.BaseClassWithField'].foo", "123");
         checkStrictEqual("itm.foo", "345");
     }
 
@@ -260,7 +262,7 @@ class TestCases extends GenerateTestCases {
         checkInstanceof("one", "String");
         checkLooseEqual("one", "'ONE'");
         checkNotStrictEqual("one", "'ONE'");
-        checkStrictEqual("one.class.name", "'SomeEnum'");
+        checkStrictEqual("one.class.name", "'io.github.gagern.nodeJavaDeserialization.SomeEnum'");
         checkThat("one.class.isEnum");
         checkStrictEqual("one.class.super.name", "'java.lang.Enum'");
         checkStrictEqual("one.class.super.super", "null");
@@ -410,7 +412,7 @@ class TestCases extends GenerateTestCases {
         checkStrictEqual("itm.obj.THREE", "'baz'");
         checkStrictEqual("itm.obj.ONE.value", "123");
         checkKeys("itm.obj", "'ONE', 'THREE'");
-        checkStrictEqual("itm.keyType.name", "'SomeEnum'");
+        checkStrictEqual("itm.keyType.name", "'io.github.gagern.nodeJavaDeserialization.SomeEnum'");
         checkThat("itm.keyType.isEnum");
         checkInstanceof("itm.map", "Map");
         checkStrictEqual("itm.map.get(three)", "'baz'");

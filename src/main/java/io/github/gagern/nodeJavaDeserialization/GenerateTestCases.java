@@ -1,3 +1,5 @@
+package io.github.gagern.nodeJavaDeserialization;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -10,15 +12,16 @@ class GenerateTestCases {
 
     public static void main(String[] args) throws Exception {
         System.out.print
-            ("'use strict';\n" +
+            ("//This is a generated file from GeneratedTestCases.java\n" +
+             "'use strict';\n" +
              "\n" +
              "const chai = require('chai');\n" +
              "const expect = chai.expect;\n" +
              "const zlib = require('zlib');\n" +
-             "const javaDeserialization = require('../');\n" +
+             "const javaDeserialization = require('../../main/node');\n" +
              "\n" +
-             "// Register a classdata parser for the CompletelyCustomFormat test.\n" +
-             "javaDeserialization.registerClassDataParser('CompletelyCustomFormat', '0000000000000001', cls => ({}));\n" +
+             "// Register a classdata parser for the io.github.gagern.nodeJavaDeserialization.CompletelyCustomFormat test.\n" +
+             "javaDeserialization.registerClassDataParser('io.github.gagern.nodeJavaDeserialization.CompletelyCustomFormat', '0000000000000001', cls => ({}));\n" +
              "\n" +
              "function testCase(b64data, checks) {\n" +
              "  return function() {\n" +

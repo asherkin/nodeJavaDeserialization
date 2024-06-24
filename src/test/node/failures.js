@@ -1,7 +1,7 @@
 "use strict";
 
 const expect = require('chai').expect;
-const javaDeserialization = require('../');
+const javaDeserialization = require('../../main/node');
 
 const STREAM_MAGIC = "aced";
 const STREAM_VERSION = "0005";
@@ -147,17 +147,17 @@ describe("Failure scenarios", function() {
         expect(parsing(template1({flags: 0})))
             .to.throw("Don't know how to deserialize class with flags 0x0");
     });
-    
+
     it("version 1 external", function() {
         expect(parsing(template1({flags: SC_EXTERNALIZABLE})))
             .to.throw("Can't parse version 1 external content");
     });
-    
+
     it("unknown primitive", function() {
         expect(parsing(template1({fieldType: "Q"})))
             .to.throw("Don't know how to read field of type 'Q'");
     });
-    
+
     it("bad classDesc", function() {
         expect(parsing(template1({classDesc: TC_OBJECT})))
             .to.throw("Object not allowed here");

@@ -1,5 +1,10 @@
+/node
+/out
 /node_modules/
 /test/*.class
 /package-lock.json
 /.nyc_output/
 /coverage/
+/.idea
+*.iml
+/target

@@ -3,7 +3,7 @@
 const chai = require('chai');
 const expect = chai.expect;
 const zlib = require('zlib');
-const javaDeserialization = require('../');
+const javaDeserialization = require('../../main/node/index');
 
 // Register a classdata parser for the CompletelyCustomFormat test.
 javaDeserialization.registerClassDataParser('CompletelyCustomFormat', '0000000000000001', cls => ({}));
